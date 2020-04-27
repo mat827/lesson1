@@ -15,16 +15,14 @@ class BooksController < ApplicationController
   end
 
   def create
-        book = Book.new(book_params)
+        @book = Book.new(book_params)
 
-      if book.save
-        redirect_to book_path(book.id)
-        flash[:success] = "Book was sucessfully created."
+      if @book.save
+        redirect_to book_path(@book.id)
+        flash[:success] = "Book was successfully created."
       else
-
-
-
-
+        flash[:notice]= 'error! DO not update blank'
+        @books= Book.all
         render action: :index
       end
 
@@ -40,10 +38,10 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     if @book.update(book_params)
        redirect_to book_path(@book.id)
-       flash[:success] = "Book was scucessfully created."
+       flash[:success] = "Book was successfully created."
      else
-      
-      flash[:notice]= 'Error! DO not update blank'
+
+      flash[:notice]= 'error! DO not update blank'
 
       render action: :edit
     end
